@@ -23,7 +23,7 @@ jobs:
         image: postgres
         env:
           POSTGRES_PASSWORD: test
-          POSTGRES_DB: min-wallet
+          POSTGRES_DB: inits-product
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
