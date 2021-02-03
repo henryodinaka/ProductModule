@@ -37,6 +37,7 @@ public class PurchaseHistory {
 
     @PrePersist
     public void beforeSave() {
+        this.id = UUID.randomUUID().toString();
         this.createdAt = LocalDateTime.now();
     }
 

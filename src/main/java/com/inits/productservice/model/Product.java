@@ -26,7 +26,7 @@ import java.util.UUID;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Product {
     @Id
-    private String id = UUID.randomUUID().toString();
+    private String id ;
     @NotBlank(message = "Product name cannot be blank")
     private String name;
     private int quantity;
@@ -44,6 +44,7 @@ public class Product {
 
     @PrePersist
     public void beforeSave() {
+        this.id = UUID.randomUUID().toString();
         this.createdAt = LocalDateTime.now();
     }
 

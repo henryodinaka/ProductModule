@@ -2,7 +2,7 @@ name: Build Test and Deploy Container to Heroku staging ENV
 
 on:
   push:
-    branches: [ development ]
+    branches: [ master ]
 
 jobs:
   build:
@@ -64,8 +64,8 @@ jobs:
       - name: Build and push
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: heroku container:push -a product-service web
+        run: heroku container:push -a inits-product-service web
       - name: Release
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: heroku container:release -a product-service web
+        run: heroku container:release -a inits-product-service web

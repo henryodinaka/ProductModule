@@ -24,14 +24,6 @@ import static org.springframework.web.servlet.function.RouterFunctions.route;
  */
 @Configuration
 public class AppConfig {
-
-    @Value("${spring.redis.host}")
-    private String redisHostName;
-
-    @Autowired
-    private Environment env;
-
-
     @Bean
     public RestTemplate getResTemplate() {
         return new RestTemplate(clientHttpRequestFactory());
@@ -47,46 +39,6 @@ public class AppConfig {
         clientHttpRequestFactory.setHttpClient(HttpClientBuilder.create().build());
         return clientHttpRequestFactory;
     }
-//    @Bean
-//    JedisConnectionFactory jedisConnectionFactory() {
-//        try {
-//            URI redisUri = new URI(redisHostName);
-//
-//            JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
-//            String host = redisHostName;
-//            int port = 6379;
-//            String password = "";
-//            String activeProfile = env.getProperty("spring.profiles.active");
-//            System.out.println("Printing active profile to configure redis " + activeProfile);
-//            if ("staging".equalsIgnoreCase(activeProfile)) {
-//                host = redisUri.getHost();
-//                port = redisUri.getPort();
-//                password = redisUri.getUserInfo().split(":", 2)[1];
-//            } else {
-//                password = env.getProperty("spring.redis.password");
-//            }
-//
-//            jedisConnectionFactory.setHostName(host);
-//            jedisConnectionFactory.setPort(port);
-//            if (password != null && !password.isEmpty())
-//                jedisConnectionFactory.setPassword(password);
-//            jedisConnectionFactory.setUsePool(true);
-//            jedisConnectionFactory.getPoolConfig().setMaxIdle(30);
-//            jedisConnectionFactory.getPoolConfig().setMinIdle(10);
-//            return jedisConnectionFactory;
-//        } catch (URISyntaxException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
-//
-//    @Bean
-//    public RedisTemplate<String, Object> initRedis() {
-//        RedisTemplate<String, Object> template = new RedisTemplate<>();
-//        template.setConnectionFactory(jedisConnectionFactory());
-//        return template;
-//    }
-
     @Bean
     RouterFunction<ServerResponse> routerFunctionSwagger() {
         return route(GET("/swagger"), req ->
