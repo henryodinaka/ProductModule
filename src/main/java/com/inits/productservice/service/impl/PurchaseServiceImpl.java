@@ -53,8 +53,13 @@ public class PurchaseServiceImpl implements PurchaseService {
                 .build();
         log.info("Making an https call to Order service with url {} and request payload {}", orderServiceUrl, orderRequest);
 
-        // TODO: 2/2/2021 Make api call to order service
-
+        // TODO: 2/2/2021 Make api call to order service which returns a valid response, update the orderstatus
+boolean callToOderServiceIsSuccess = true;
+        if (callToOderServiceIsSuccess)
+        {
+            history.setStatus(PurchaseStatus.PLACED.name());
+            purchaseRepository.save(history);
+        }
 
     }
 }
