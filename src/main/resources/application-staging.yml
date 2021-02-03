@@ -1,0 +1,41 @@
+app:
+  redis:
+    session:
+      timeout: 15
+lang: en
+server:
+  port: ${PORT:60097}
+spring:
+  datasource:
+    continue-on-error: true
+    driverClassName: org.postgresql.Driver
+    hikari:
+      idle-timeout: 5
+      maximum-pool-size: 30
+    initialization-mode: always
+    password: ${DB_PASS}
+    testWhileIdle: true
+    url: jdbc:postgresql://${DB_URL}:5432/${DB_NAME}?gssEncMode=disable
+    username: ${DB_USER}
+    validationQuery: SELECT 1
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+      fail-on-empty-beans: false
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    show-sql: false
+  redis:
+    host: ${REDIS_URL}
+    port: 6379
