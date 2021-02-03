@@ -15,4 +15,5 @@ FROM openjdk:14-slim
 COPY --from=build /workspace/target/*product.jar product.jar
 EXPOSE 80
 VOLUME /usr/src
-ENTRYPOINT ["java","-jar","product.jar"]
+#ENTRYPOINT ["java","-jar","product.jar"]
+CMD ["java","-jar","product.jar"]
