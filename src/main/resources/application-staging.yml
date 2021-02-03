@@ -4,20 +4,8 @@ app:
       timeout: 15
 lang: en
 server:
-  port: ${PORT:60097}
+  port: ${PORT:9000}
 spring:
-  datasource:
-    continue-on-error: true
-    driverClassName: org.postgresql.Driver
-    hikari:
-      idle-timeout: 5
-      maximum-pool-size: 30
-    initialization-mode: always
-    password: ${DB_PASS}
-    testWhileIdle: true
-    url: jdbc:postgresql://${DB_URL}:5432/${DB_NAME}?gssEncMode=disable
-    username: ${DB_USER}
-    validationQuery: SELECT 1
   devtools:
     livereload:
       enabled: true
@@ -29,13 +17,13 @@ spring:
       fail-on-empty-beans: false
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     properties:
       hibernate:
-        jdbc:
-          lob:
-            non_contextual_creation: true
+        temp:
+          use_jdbc_metadata_defaults: false
     show-sql: false
+    database: postgresql
   redis:
-    host: ${REDIS_URL}
+    host: localhost
     port: 6379
