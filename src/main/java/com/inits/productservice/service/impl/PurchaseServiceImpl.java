@@ -2,6 +2,7 @@ package com.inits.productservice.service.impl;
 
 import com.inits.productservice.constants.PurchaseStatus;
 import com.inits.productservice.dto.request.OrderRequest;
+import com.inits.productservice.dto.response.Response;
 import com.inits.productservice.model.Product;
 import com.inits.productservice.model.PurchaseHistory;
 import com.inits.productservice.repository.PurchaseRepository;
@@ -52,10 +53,11 @@ public class PurchaseServiceImpl implements PurchaseService {
                 .isUpdate(isUpdate)
                 .build();
         log.info("Making an https call to Order service with url {} and request payload {}", orderServiceUrl, orderRequest);
-
         // TODO: 2/2/2021 Make api call to order service which returns a valid response, update the orderstatus
-boolean callToOderServiceIsSuccess = true;
-        if (callToOderServiceIsSuccess)
+        ResponseEntity<Response> responseEntity = ResponseEntity.ok(new Response("200","Order Placed successfully",orderRequest));
+        var response = responseEntity.getBody();
+        assert response != null;
+        if ("00".equals(response.getCode()))
         {
             history.setStatus(PurchaseStatus.PLACED.name());
             purchaseRepository.save(history);

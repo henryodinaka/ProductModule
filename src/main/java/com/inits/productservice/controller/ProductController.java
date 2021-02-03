@@ -1,7 +1,8 @@
 package com.inits.productservice.controller;
 
-import com.inits.productservice.dto.request.PurchaseRequest;
+import com.inits.productservice.constants.ResponseCode;
 import com.inits.productservice.dto.request.ProductRequest;
+import com.inits.productservice.dto.request.PurchaseRequest;
 import com.inits.productservice.dto.response.Response;
 import com.inits.productservice.exception.ProductException;
 import com.inits.productservice.service.ProductService;
@@ -28,36 +29,37 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<Response> addProduct(ProductRequest request) throws ProductException {
-        return productService.addOrProduct(request, false);
+        return Response.setUpResponse(ResponseCode.SUCCESS, "Product was added ",productService.addOrProduct(request, false));
     }
 
     @PatchMapping
     public ResponseEntity<Response> updateProduct(ProductRequest request) throws ProductException {
-        return productService.addOrProduct(request, true);
+        return Response.setUpResponse(ResponseCode.SUCCESS, "Product was added ",productService.addOrProduct(request, true));
     }
 
     @GetMapping
     public ResponseEntity<Response> listAllProducts() {
-        return productService.listAllProducts();
+        return Response.setUpResponse(ResponseCode.SUCCESS, "Product listed",productService.listAllProducts());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Response> getProductsDetail(@PathVariable String id) {
-        return productService.getProductsDetail(id);
+        var value = productService.getProductsDetail(id);
+        return value !=null?Response.setUpResponse(ResponseCode.SUCCESS, "product retrieved",value): Response.setUpResponse(ResponseCode.ITEM_NOT_FOUND, "product");
     }
 
     @PostMapping("/order")
     public ResponseEntity<Response> placeOrder(@RequestBody PurchaseRequest purchaseRequest) throws ProductException {
-        return productService.placeOrUpdatePurchaseOrder(purchaseRequest, false);
+        return Response.setUpResponse(ResponseCode.SUCCESS, "Order placed ", productService.placeOrUpdatePurchaseOrder(purchaseRequest, false));
     }
 
     @PatchMapping("/order")
     public ResponseEntity<Response> updateOrder(@RequestBody PurchaseRequest purchaseRequest) throws ProductException {
-        return productService.placeOrUpdatePurchaseOrder(purchaseRequest, true);
+        return Response.setUpResponse(ResponseCode.SUCCESS, "Order placed ", productService.placeOrUpdatePurchaseOrder(purchaseRequest, true));
     }
 
     @GetMapping("/{productId}/order")
     public ResponseEntity<Response> listProductOrderHistories(@PathVariable String productId) throws ProductException {
-        return productService.listProductPurchaseHistories(productId);
+        return Response.setUpResponse(ResponseCode.SUCCESS, "Order histories retrieved", productService.listProductPurchaseHistories(productId));
     }
 }
