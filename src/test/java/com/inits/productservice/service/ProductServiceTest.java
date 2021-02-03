@@ -46,7 +46,7 @@ public class ProductServiceTest {
     }
     @After
     public void cleanUp(){
-        productRepository.deleteAll();
+        productRepository.deleteById(product.getId());
     }
     @Test
     public void testAddOrProduct() throws ProductException {
@@ -57,6 +57,7 @@ public class ProductServiceTest {
                 .quantity(50)
                 .build();
         var productResponse = productService.addOrProduct(productRequest, false);
+        cleanProduct(productResponse.getId());
         Assertions.assertThat(productResponse).isNotNull();
         Assertions.assertThat(productResponse.getName()).isEqualTo("Gold");
     }
@@ -65,7 +66,7 @@ public class ProductServiceTest {
     public void testListAllProducts() {
         var productResponses = productService.listAllProducts();
         Assertions.assertThat(productResponses).isNotNull();
-        Assertions.assertThat(productResponses.size()).isEqualTo(1);
+        Assertions.assertThat(productResponses.size()).isEqualTo(3);
     }
 
     @Test
@@ -88,5 +89,12 @@ public class ProductServiceTest {
         var purchaseResponses = productService.listProductPurchaseHistories(product.getId());
         Assertions.assertThat(purchaseResponses).isNotNull();
         Assertions.assertThat(purchaseResponses.size()).isEqualTo(2);
+    }
+    public void cleanProduct(String productId){
+        try{
+            productRepository.deleteById(productId);
+        }catch (Exception e){
+            System.out.println("Failed to clean Up "+e);
+        }
     }
 }
